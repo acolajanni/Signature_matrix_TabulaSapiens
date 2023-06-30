@@ -21,7 +21,7 @@ Tabula Sapiens - Immune (à vérifier)
 
 Faire un schéma qui reprend les étapes
 
-.h5ad => script XXX ==> visualisation / filtration R ==> script XXX
+download .h5ad file => extracting .csv data (script extract matrice.py) ==> filtration R (extract faeatures.Rmd) ==> RF algo (extract features reduces dataset.py)
 
 
 ## Method description 
