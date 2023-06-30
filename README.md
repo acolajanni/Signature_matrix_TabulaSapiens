@@ -14,8 +14,11 @@ Tabula Sapiens - Immune (à vérifier)
 
 ## File Description: 
 
-[Signature matrix constitution](/markdown/)
+[Signature matrix constitution](/markdown/): document .html describing the filtration step for the data
 
 
 
-## 
+
+## Method description 
+
+![schéma](/doc/Diapo_pathseq-TabulaSapiens.drawio.png)
