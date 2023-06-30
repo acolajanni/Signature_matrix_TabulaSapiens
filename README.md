@@ -17,7 +17,11 @@ Tabula Sapiens - Immune (à vérifier)
 [Signature matrix constitution](/markdown/): document .html describing the filtration step for the data
 
 
+## Pipeline: 
 
+Faire un schéma qui reprend les étapes
+
+.h5ad => script XXX ==> visualisation / filtration R ==> script XXX
 
 ## Method description 
 
