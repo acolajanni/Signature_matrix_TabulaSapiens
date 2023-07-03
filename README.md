@@ -18,8 +18,13 @@ Tabula Sapiens - Immune
 
 ## File Description: 
 
-[Signature matrix constitution](/markdown/): The .html document describes the filtration steps before and after the permutaions steps. The figures are produced by the *feature_selection.R* script
+[Signature matrix constitution](/markdown/): The .html document describes the filtration steps before and after the permutaions steps. The figures are produced by the [*feature_selection.R*](/scripts/) script
 
+The selected features for each comparison, from the broader selection to the final one are available [here](/genesets)
+
+All the scripts used to compute the signature matrix are [here](/scripts). 
+
+Permutation results are contained [here](/results).
 
 ## Method description 
 
