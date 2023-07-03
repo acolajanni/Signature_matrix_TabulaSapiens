@@ -1,12 +1,13 @@
 ---
-title: "Feature selection of cell types in scRNAseq Tabula sapiens (Blood tissue) V2 "
+title: 'Feature selection of cell types in scRNAseq Tabula sapiens (Blood tissue)
+  V2 '
 author: "Antonin Colajanni"
 date: "`r Sys.Date()`"
-output: 
+output:
   html_document:
     toc: yes
     toc_depth: 2
-    toc_float: 
+    toc_float:
       collapsed: yes
 ---
 
