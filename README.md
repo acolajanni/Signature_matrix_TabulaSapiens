@@ -9,9 +9,9 @@ THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, s
 **URL:** 
 https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5
 
-**Tabula Sapiens - Immune** (filtered on blood tissues) 
+*Tabula Sapiens - Immune* (filtered on blood tissues) 
 
-Alternatively, the the set **Tabula Sapiens - Blood** can be directly downloaded.
+Alternatively, the the set *Tabula Sapiens - Blood* can be directly downloaded.
 
 
 ## Heatmap of the signature matrix
