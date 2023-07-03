@@ -9,7 +9,10 @@ THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, s
 **URL:** 
 https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5
 
-Tabula Sapiens - Immune 
+**Tabula Sapiens - Immune** (filtered on blood tissues) 
+
+Alternatively, the the set **Tabula Sapiens - Blood** can be directly downloaded.
+
 
 ## Heatmap of the signature matrix
 
@@ -18,13 +21,11 @@ Tabula Sapiens - Immune
 
 ## File Description: 
 
-[Signature matrix constitution](/markdown/): The .html document describes the filtration steps before and after the permutaions steps. The figures are produced by the [*feature_selection.R*](/scripts/) script
+The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (à ajouter quand il sera fini), in the same [folder](/scripts/) as the other scripts.
 
-The selected features for each comparison, from the broader selection to the final one are available [here](/genesets)
 
-All the scripts used to compute the signature matrix are [here](/scripts). 
+[Permutation results](/results) contains the .csv with the permutation importance of each variable for the 50 permutation. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
 
-Permutation results are contained [here](/results).
 
 ## Method description 
 
