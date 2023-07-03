@@ -27,3 +27,8 @@ download .h5ad file => extracting .csv data (script extract matrice.py) ==> filt
 ## Method description 
 
 ![schéma](/doc/Diapo_pathseq-TabulaSapiens.drawio.png)
+
+
+## Pipeline
+
+![schéma2](/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png)
