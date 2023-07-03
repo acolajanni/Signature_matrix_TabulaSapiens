@@ -27,5 +27,4 @@ Tabula Sapiens - Immune
 
 All the mentionned script are available [here](/scripts/)
 
-![schéma2](/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png)
-<img src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="900">
+<img src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="650">
