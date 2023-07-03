@@ -11,19 +11,20 @@ https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f
 
 Tabula Sapiens - Immune 
 
+## Heatmap of the signature matrix
+
+*to add*
+
 
 ## File Description: 
 
 [Signature matrix constitution](/markdown/): The .html document describes the filtration steps before and after the permutaions steps. The figures are produced by the *feature_selection.R* script
 
 
-
 ## Method description 
 
 <p align="center">
 <img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="500">
-
-
 
   
 ## Pipeline
