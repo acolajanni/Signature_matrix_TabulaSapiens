@@ -20,7 +20,7 @@ Tabula Sapiens - Immune
 
 ## Method description 
 
-![schéma](/doc/Diapo_pathseq-TabulaSapiens.drawio.png)
+<img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="750">
 
 
 ## Pipeline
@@ -29,7 +29,6 @@ All the mentionned script are available [here](/scripts/).
 
 
 As shown in the previous diagram, for a given comparison, two series of permutations can be done if it remains more than 250 features after filtration with permutation variable importance.
-It is also important to note that the filtration after permutation is not automated, a manual review of the results has to be done, to re launch a set of permutation after. 
+It is also important to note that the filtration after permutation is not automated. It must be launched manually after each of those steps. 
 
-
-<img src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="650">
+<img src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="750">
