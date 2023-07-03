@@ -17,12 +17,6 @@ Tabula Sapiens - Immune
 [Signature matrix constitution](/markdown/): document .html describing the filtration step for the data
 
 
-## Pipeline: 
-
-Faire un schéma qui reprend les étapes
-
-download .h5ad file => extracting .csv data (script extract matrice.py) ==> filtration R (extract faeatures.Rmd) ==> RF algo (extract features reduces dataset.py)
-
 
 ## Method description 
 
@@ -30,5 +24,7 @@ download .h5ad file => extracting .csv data (script extract matrice.py) ==> filt
 
 
 ## Pipeline
+
+All the mentionned script are available [here](/scripts/)
 
 ![schéma2](/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png)
