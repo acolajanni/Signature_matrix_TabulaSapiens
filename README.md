@@ -9,7 +9,7 @@ THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, s
 **URL:** 
 https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5
 
-Tabula Sapiens - Immune (à vérifier)
+Tabula Sapiens - Immune 
 
 
 ## File Description: 
