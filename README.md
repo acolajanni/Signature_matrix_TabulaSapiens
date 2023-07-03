@@ -1,5 +1,9 @@
 # Signature matrix built from Tabula Sapiens single cell dataset
 
+
+**Be Carefull, the current signature matrix is built on 16487 cells, not 50115 as it should be, results will differ**
+
+
 **Contact:**
 Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
 
