@@ -34,7 +34,23 @@ The [.html document](/markdown/feature_selection_v2.html) describes the filtrati
 <p align="center">
 <img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="500">
 
-  
+
+After the obtention of the normalised count table, a first step of feature engineering is done. First, for each celltype the mean expression of it and without the said celltype is computed. This way, a fold change between the background and the given cell can be calculated.
+
+Then, the number of cell expressing each gene for each celltype is also computed in order to filter on the percentage of cell expressing a gene. 
+
+With these two parameters, a filtration can be done. First if we compare one celltype vs all other, the filtration is done on the absolute value of the log2 Fold Change being superior to 1, meaning, a gene must be, at least twice as expressed in the given celltype compared to be background and conversly and it must be expressed in 25% of the cells of this given celltype. Alternatively, the curve of the absolute Fold change is generated, and all the genes with a fold change higher than the inflexion point of the curve* is selected, independantly of the proportion of cell expressing it. 
+
+For the alternative, a gene can be a signature for a given celltype if it is expressed everywhere except in the said celltype. And, for the 25% threshold, it is supposed to be relatively generous to avoid selecting false negative gene. Moreover, for some celltypes, I aggregated several sub celltypes, it is the case for the T.CD4 cells for example, that corresponds to the aggregation of 
+*CD4-positive, alpha-beta T cell*, *CD4-positive, alpha-beta memory T cell* and *naive thymus-derived CD4-positive, alpha-beta T cell* that are not equally represented.
+
+*using the kneedle algorithm contained is the eponym package in R 
+
+
+For the Celltype vs Celltype comparison, it is done between certain celltypes, known to be relatively similar, to help the model finding disciminative genes that could have been obscured by the comparison with the Fold change computed with the background mean expression. The same threshold the Fold change is used, however, it has been found that a threshold at 25% of cell expressing a gene was too stringent, so the choice has been made to select genes expressed in at least 2 cells in the given celltypes. 
+
+
+
 ## Pipeline
 
 All the mentionned script are available [here](/scripts/).
