@@ -14,15 +14,18 @@ Tabula Sapiens - Immune
 
 ## File Description: 
 
-[Signature matrix constitution](/markdown/): document .html describing the filtration step for the data
+[Signature matrix constitution](/markdown/): The .html document describes the filtration steps before and after the permutaions steps. The figures are produced by the *feature_selection.R* script
 
 
 
 ## Method description 
 
-<img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="750">
+<p align="center">
+<img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="500">
 
 
+
+  
 ## Pipeline
 
 All the mentionned script are available [here](/scripts/).
@@ -31,4 +34,5 @@ All the mentionned script are available [here](/scripts/).
 As shown in the previous diagram, for a given comparison, two series of permutations can be done if it remains more than 250 features after filtration with permutation variable importance.
 It is also important to note that the filtration after permutation is not automated. It must be launched manually after each of those steps. 
 
-<img src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="750">
+<p align="center">
+<img align="center" src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="750">
