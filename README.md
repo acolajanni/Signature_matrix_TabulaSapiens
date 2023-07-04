@@ -32,7 +32,7 @@ The [.html document](/markdown/feature_selection_v2.html) describes the filtrati
 ## Method description 
 
 <p align="center">
-<img src="/doc/Tabula_sapiens_pipeline.drawio.png" height="500">
+<img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="500">
 
 
 After the obtention of the normalised count table, a first step of feature engineering is done. First, for each celltype the mean expression of it and without the said celltype is computed. This way, a fold change between the background and the given cell can be calculated.
@@ -60,4 +60,4 @@ As shown in the previous diagram, for a given comparison, two series of permutat
 It is also important to note that the filtration after permutation is not automated. It must be launched manually after each of those steps. 
 
 <p align="center">
-<img align="center" src="/doc/Diapo_pathseq-Tabula_sapiens_pipeline.drawio.png" height="750">
+<img align="center" src="/doc/Tabula_sapiens_pipeline.drawio.png" height="750">
