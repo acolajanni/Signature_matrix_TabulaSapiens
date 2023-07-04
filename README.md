@@ -26,7 +26,9 @@ Alternatively, the data *Tabula Sapiens - Blood* can be directly downloaded.
 The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (à ajouter quand il sera fini), in the same [folder](/scripts/) as the other scripts.
 
 
-[Permutation results](/results) contains the .csv with the permutation importance of each variable for the 50 permutation. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
+The [results](/results) folder contains the .csv with the permutation importance of each variable for the 50 permutations. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
+
+At last, the evaluated classification performance are contained in the folder [performance](/performance).
 
 
 ## Method description 
