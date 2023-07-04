@@ -1,7 +1,20 @@
 # Signature matrix built from Tabula Sapiens single cell dataset
 
+# Work in progress
 
 **Be Carefull, the current signature matrix is built on 16487 cells, not 50115 as it should be, results will differ**
+
+This page describes the composition and the method of the reference matrix built from Tabula Sapiens single cell dataset. It contains: 
+- T CD4 +
+- T CD8 +
+- Memory B cell
+- Naive B cell
+- Monocyte
+- Natural killer cell
+- Neutrophil
+- Macrophage
+- Platelet
+- Plasma cell (plasmocyte)
 
 
 **Contact:**
@@ -51,6 +64,32 @@ For the alternative, a gene can be a signature for a given celltype if it is exp
 
 For the Celltype vs Celltype comparison, it is done between certain celltypes, known to be relatively similar, to help the model finding disciminative genes that could have been obscured by the comparison with the Fold change computed with the background mean expression. The same threshold the Fold change is used, however, it has been found that a threshold at 25% of cell expressing a gene was too stringent, so the choice has been made to select genes expressed in at least 2 cells in the given celltypes. 
 
+
+The chosen algorithm to realise permutation on, and compute variable importance is the [Random Forest implemented in the scikit-learn package](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier). The forests are set to contain 1000 trees, with the otehr parameters set to default.
+This classifier is then embeded in the [permutation_importance](https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html#sklearn.inspection.permutation_importance) method which will permute the expression value of a given gene between groups to compare the effect on the decrease in mean squared error (MSE) relative to a situation without permutation. This way, each gene will have it's values permutated 50 times. The mean decrease in MSE for the 50 permutations is the permutation Variable Importance (VI) used to select the genesets for each celltype. 
+
+
+The other possibility for feature selection was to use a logarithmic regression with a lasso penalty, where the low coefficients will shrink towards zero for the less informative variables. However, given the number of features, the model had to be used several times to converge towards a relatively low number of selected features which is not ideal. Moreover, in this kind of model, each variable is observed independantly as it will be far too complex to model the interactions between each gene for the selection. On the contrary with the Random Forest, for each nodes of a decision tree an interaction is modelized. For example if gene A > 2.5 & gene B > 4 & Gene C < ...   
+
+The edges of the decision trees models the interaction between the expression of several genes.
+
+To evaluate the quality of the prediction with the selected features, the single cell transcriptomics data from Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen, Luisa Imberti, Darius Mostaghimi, et al. 2021. « Time-Resolved Systems Immunology Reveals a Late Juncture Linked to Fatal COVID-19 ». Cell 184 (7): 1836-1857.e22. https://doi.org/10.1016/j.cell.2021.02.018.
+
+**URL:** https://cellxgene.cziscience.com/collections/ed9185e3-5b82-40c7-9824-b2141590c7f0
+
+
+Only the cells belonging to healthy patients are kept. We want to compare the predictive value of our set of gene with the state of the art reference matrix LM22, used by default by Cibersort*, a software that predicts cell proportion in RNAseq data based on the expression values. This way, only the celltype present in the data and our genesets and LM22 are kept : 
+- T CD4 +
+- T CD8 +
+- Memory B cell
+- Naive B cell
+- Monocyte
+- Natural killer cell
+
+Neutrophils, macrophages and plasma cells being absent of the dataset, and platelet cells not in LM22 matrix.
+
+
+Chen, Binbin, Michael S. Khodadoust, Chih Long Liu, Aaron M. Newman, et Ash A. Alizadeh. 2018. « Profiling tumor infiltrating immune cells with CIBERSORT ». Methods in molecular biology (Clifton, N.J.) 1711: 243‑59. https://doi.org/10.1007/978-1-4939-7493-1_12.
 
 
 ## Pipeline
