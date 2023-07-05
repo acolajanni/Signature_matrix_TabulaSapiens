@@ -109,3 +109,6 @@ All the mentionned script are available [here](/scripts/).
 As shown in the previous diagram, for a given comparison, two series of permutations can be done if it remains more than 250 features after filtration with permutation variable importance.
 It is also important to note that the filtration after permutation is not automated. It must be launched manually after each of those steps. 
 
+
+<p align="center">
+<img align="center" src="/doc/Tabula_sapiens_pipeline.drawio.png" height="750">
