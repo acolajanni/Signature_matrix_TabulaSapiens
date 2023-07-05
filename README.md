@@ -80,12 +80,14 @@ The other possibility for feature selection was to use a logarithmic regression 
 
 The edges of the decision trees models the interaction between the expression of several genes.
 
-To evaluate the quality of the prediction with the selected features, the single cell transcriptomics data from Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen, Luisa Imberti, Darius Mostaghimi, et al. 2021. « Time-Resolved Systems Immunology Reveals a Late Juncture Linked to Fatal COVID-19 ». Cell 184 (7): 1836-1857.e22. https://doi.org/10.1016/j.cell.2021.02.018.
+To evaluate the quality of the prediction with the selected features, the single cell transcriptomics data from:
+
+Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen, Luisa Imberti, Darius Mostaghimi, et al. 2021. « Time-Resolved Systems Immunology Reveals a Late Juncture Linked to Fatal COVID-19 ». Cell 184 (7): 1836-1857.e22. https://doi.org/10.1016/j.cell.2021.02.018.
 
 **URL:** https://cellxgene.cziscience.com/collections/ed9185e3-5b82-40c7-9824-b2141590c7f0
 
 
-Only the cells belonging to healthy patients are kept. We want to compare the predictive value of our set of gene with the state of the art reference matrix LM22, used by default by Cibersort*, a software that predicts cell proportion in RNAseq data based on the expression values. This way, only the celltype present in the data and our genesets and LM22 are kept : 
+Since we already used the Tabula Sapiens data more than once to select the features and compute the variable importances, this dataset has been chosen, as it contains a lot of cells: 8439 after filtration: Only the cells belonging to healthy patients are kept. We want to compare the predictive value of our set of gene with the state of the art reference matrix LM22, used by default by Cibersort*, a software that predicts cell proportion in RNAseq data based on the expression values. This way, only the celltype present in the data and our genesets and LM22 are kept : 
 - T CD4 +
 - T CD8 +
 - Memory B cell
