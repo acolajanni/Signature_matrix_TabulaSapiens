@@ -27,12 +27,6 @@ This page describes the composition and the method of the reference matrix built
 
 *work in progress*
 
-
-## File Description: 
-
-The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (à ajouter quand il sera fini), in the same [folder](/scripts/) as the other scripts.
-
-
 The [results](/results) folder contains the .csv with the permutation importance of each variable for the 50 permutations. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
 
 At last, the evaluated classification performance are contained in the folder [performance](/performance).
@@ -55,6 +49,11 @@ Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen,
 
 *Both dataset with cells of innate and adaptative immunity has been used.*
 
+
+
+## File Description: 
+
+The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (à ajouter quand il sera fini), in the same [folder](/scripts/) as the other scripts.
 
 ## Method description 
 
