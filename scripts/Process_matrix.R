@@ -1,5 +1,5 @@
 # > June 2023                                                                                                              
-# > Script : Process_matrix_50k.R                                                                                                      
+# > Script : Process_matrix.R                                                                                                      
 # > Function : Computaing necessary steps for the feature filtration                  
 # @ COLAJANNI Antonin                                                          
 ################################################################################
@@ -7,6 +7,7 @@
 library(stringr)
 library(UpSetR)
 library(tidyverse)
+source("/home/acolajanni/Documents/work/GITHUB/Signature_matrix_TabulaSapiens/scripts/functions/functions_R.R")
 
 ################################################################################
 # CLUSTER version
@@ -18,14 +19,6 @@ path = file.path("/shared/projects/microbiome_translocation/")
 data_dir = file.path(path, "data/Tabula_sapiens_immune_all/")
 result_dir = file.path(path, "results/Tabula_sapiens/")
 setwd(path)
-
-################################################################################
-# F U N C T I O N S
-
-create_dir = function(directory){
-  if ( ! file.exists(directory)){
-    dir.create(directory)  }
-  return(directory) }
 
 ################################################################################
 # I M P O R T
