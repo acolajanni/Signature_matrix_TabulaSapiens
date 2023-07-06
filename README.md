@@ -7,18 +7,7 @@
 **Contact:**
 Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
 
-## Data
-THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, single-cell transcriptomic atlas of humans ». Science 376 (6594): eabl4896. https://doi.org/10.1126/science.abl4896.
-
-**URL:** 
-https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5 - *Tabula Sapiens - Immune* (filtered on blood tissues) 
-
-Alternatively, the data *Tabula Sapiens - Blood* can be directly downloaded.
-
-
-
-
-
+# Aim
 
 This page describes the composition and the method of the reference matrix built from Tabula Sapiens single cell dataset. It contains: 
 - T CD4 +
@@ -31,8 +20,6 @@ This page describes the composition and the method of the reference matrix built
 - Macrophage
 - Platelet
 - Plasma cell (plasmocyte)
-
-
 
 
 
@@ -49,6 +36,14 @@ The [.html document](/markdown/feature_selection_v2.html) describes the filtrati
 The [results](/results) folder contains the .csv with the permutation importance of each variable for the 50 permutations. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
 
 At last, the evaluated classification performance are contained in the folder [performance](/performance).
+
+## Data
+THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, single-cell transcriptomic atlas of humans ». Science 376 (6594): eabl4896. https://doi.org/10.1126/science.abl4896.
+
+**URL:** 
+https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5 - *Tabula Sapiens - Immune* (filtered on blood tissues) 
+
+Alternatively, the data *Tabula Sapiens - Blood* can be directly downloaded.
 
 
 ## Method description 
