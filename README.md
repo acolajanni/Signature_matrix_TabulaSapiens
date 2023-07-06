@@ -41,7 +41,9 @@ At last, the evaluated classification performance are contained in the folder [p
 THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, single-cell transcriptomic atlas of humans ». Science 376 (6594): eabl4896. https://doi.org/10.1126/science.abl4896.
 
 **URL:** 
-https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5 - *Tabula Sapiens - Immune* (filtered on blood tissues) 
+https://cellxgene.cziscience.com/collections/e5f58829-1a66-40b5-a624-9046778e74f5 
+
+*Tabula Sapiens - Immune* (filtered on blood tissues) 
 
 Alternatively, the data *Tabula Sapiens - Blood* can be directly downloaded.
 
