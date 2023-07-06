@@ -51,7 +51,7 @@ Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen,
 
 **URL:** https://cellxgene.cziscience.com/collections/ed9185e3-5b82-40c7-9824-b2141590c7f0
 
-
+*Both dataset with cells of innate and adaptative immunity has been used.*
 
 
 ## Method description 
