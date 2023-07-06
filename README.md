@@ -27,9 +27,6 @@ This page describes the composition and the method of the reference matrix built
 
 *work in progress*
 
-The [results](/results) folder contains the .csv with the permutation importance of each variable for the 50 permutations. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
-
-At last, the evaluated classification performance are contained in the folder [performance](/performance).
 
 ## Data
 THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, single-cell transcriptomic atlas of humans ». Science 376 (6594): eabl4896. https://doi.org/10.1126/science.abl4896.
@@ -54,6 +51,10 @@ Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen,
 ## File Description: 
 
 The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (à ajouter quand il sera fini), in the same [folder](/scripts/) as the other scripts.
+
+The [results](/results) folder contains the .csv with the permutation importance of each variable for the 50 permutations. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
+
+At last, the evaluated classification performance are contained in the folder [performance](/performance).
 
 ## Method description 
 
