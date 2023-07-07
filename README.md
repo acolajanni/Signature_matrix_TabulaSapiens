@@ -25,7 +25,9 @@ This page describes the composition and the method of the reference matrix built
 
 ## Heatmap of the signature matrix
 
-*work in progress*
+<p align="center">
+<img align="center" src="/doc/Tabula_sapiens_reference_heatmap.png" width="1600">
+
 
 
 ## Data
