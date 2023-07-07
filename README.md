@@ -1,5 +1,10 @@
 # Signature matrix built from Tabula Sapiens single cell dataset
 
+**Contact:**
+Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
+
+
+
 # Work in progress
 
 Some files may be missing or not up to date : 
@@ -7,8 +12,7 @@ Some files may be missing or not up to date :
 - one or two scripts
 - results folder
 
-**Contact:**
-Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
+
 
 # Aim
 
