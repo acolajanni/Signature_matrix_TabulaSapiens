@@ -55,7 +55,7 @@ Liu, Can, Andrew J. Martins, William W. Lau, Nicholas Rachmaninoff, Jinguo Chen,
 
 ## File Description: 
 
-The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (à ajouter quand il sera fini), in the same [folder](/scripts/) as the other scripts.
+The [.html document](/markdown/feature_selection_v2.html) describes the filtration steps before and after the permutaions steps. The code to produce the figures is the [*feature_selection.R*](/scripts/Feature_selection.R) script (*MISSING*), in the same [folder](/scripts/) as the other scripts.
 
 The [results](/results) folder contains the .csv with the permutation importance of each variable for the 50 permutations. The obtained features after selection for each comparison, from the broader selection to the final one are available [here](/genesets).
 
@@ -67,33 +67,32 @@ At last, the evaluated classification performance are contained in the folder [p
 <img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="500">
 
 
-After the obtention of the normalised count table, a first step of feature engineering is done. First, for each celltype the mean expression of it and without the said celltype is computed. This way, a fold change between the background and the given cell can be calculated.
+After obtaining the normalised count table, a first step of feature engineering is done. First, for each celltype the mean expression of it and without the said celltype is computed. This way, a fold change between the background and the given cell can be calculated.
 
-Then, the number of cell expressing each gene for each celltype is also computed in order to filter on the percentage of cell expressing a gene. 
+Then, the number of cell expressing each gene for each celltype is also computed in order to filter on the percentage of cell expressing each gene. 
 
-With these two parameters, a filtration can be done. First if we compare one celltype vs all other, the filtration is done on the absolute value of the log2 Fold Change being superior to 1, meaning, a gene must be, at least twice as expressed in the given celltype compared to be background and conversly and it must be expressed in 25% of the cells of this given celltype. Alternatively, the curve of the absolute Fold change is generated, and all the genes with a fold change higher than the inflexion point of the curve* are selected, independantly of the proportion of cell expressing it. 
+With these two parameters, a filtration can be done. First if we compare one celltype against all others, the filtration is done on the absolute value of the log2 Fold Change being superior to 1, meaning, a gene must be, at least twice as expressed in the given celltype compared to be background and conversely and it must be expressed in 25% of the cells of this given celltype. Alternatively, the curve of the absolute Fold change is generated, and all the genes with a fold change higher than the inflection point of the curve* are selected, independently of the proportion of cell expressing it. 
 
 For the alternative, a gene can be a signature for a given celltype if it is expressed everywhere except in the said celltype. And, for the 25% threshold, it is supposed to be relatively generous to avoid selecting false negative gene. Moreover, for some celltypes, I aggregated several sub celltypes, it is the case for the T.CD4 cells for example, that corresponds to the aggregation of 
-*CD4-positive, alpha-beta T cell*, *CD4-positive, alpha-beta memory T cell* and *naive thymus-derived CD4-positive, alpha-beta T cell* that are not equally represented.
+*CD4-positive, alpha-beta T cell*, *CD4-positive, alpha-beta memory T cell* and *naive thymus-derived CD4-positive, alpha-beta T cell* that are not equally represented. In this case, some genes may be specific to either one of these subtypes and therefore not expressed in all CD4 cells.
 
-*using the kneedle algorithm contained is the eponym package in R 
+*using the R package [kneedle](https://rdrr.io/github/etam4260/kneedle/man/kneedle.html).
 
-
-For the Celltype vs Celltype comparison, it is done between certain celltypes, known to be relatively similar, to help the model finding disciminative genes that could have been obscured by the comparison with the Fold change computed with the background mean expression. The same threshold the Fold change is used, however, it has been found that a threshold at 25% of cell expressing a gene was too stringent, so the choice has been made to select genes expressed in at least 2 cells in the given celltypes. 
-
-
-The chosen algorithm to realise permutation on, and compute variable importance is the [Random Forest implemented in the scikit-learn package](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier). The forests are set to contain 1000 trees, with the otehr parameters set to default.
-This classifier is then embeded in the [permutation_importance](https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html#sklearn.inspection.permutation_importance) method which will permute the expression value of a given gene between groups to compare the effect on the decrease in mean squared error (MSE) relative to a situation without permutation. This way, each gene will have it's values permutated 50 times. The mean decrease in MSE for the 50 permutations is the permutation Variable Importance (VI) used to select the genesets for each celltype. 
+For the Celltype vs Celltype comparison, it is done between certain celltypes, known to be relatively similar, to help the model finding discriminating genes that could have been obscured by the comparison with the Fold change computed with the background mean expression. The same threshold for the Fold change is used and the inflection point of the Fold change curver, however, it has been found that a threshold at 25% of cell expressing a gene was too stringent, with very few genes selected. The choice has finally been made to select genes expressed in at least 2 cells in the given celltypes. 
 
 
-The other possibility for feature selection was to use a logarithmic regression with a lasso penalty, where the low coefficients will shrink towards zero for the less informative variables. However, given the number of features, the model had to be used several times to converge towards a relatively low number of selected features which is not ideal. Moreover, in this kind of model, each variable is observed independantly as it will be far too complex to model the interactions between each gene for the selection. On the contrary with the Random Forest, for each nodes of a decision tree an interaction is modelized. For example if gene A > 2.5 & gene B > 4 & Gene C < ...   
+The chosen algorithm for the permuting and computing variable importance is the [Random Forest implemented in the scikit-learn package](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn.ensemble.RandomForestClassifier). The forests are set to contain 1000 trees, with the otehr parameters set to default.
+This classifier is then embeded in the [permutation_importance](https://scikit-learn.org/stable/modules/generated/sklearn.inspection.permutation_importance.html#sklearn.inspection.permutation_importance) method which will permute the expression value of a given gene between groups to compare the effect on the decrease in mean squared error (MSE) relative to a situation without permutation to explore the how affected the predictions are when the information contained in a column is blurred. This way, each gene will have it's values permutated 50 times. The mean decrease in MSE for the 50 permutations is the permutation Variable Importance (VI) used to select the genesets for each celltype. 
+
+
+The other possibility for feature selection was to use a logarithmic regression with a lasso penalty, where the low coefficients will shrink towards zero for the less informative variables. However, given the number of features, the model had to be used several times to converge towards a relatively low number of selected features which is not ideal. Moreover, in this kind of model, each variable is observed independently as it will be far too complex to model the interactions between each gene for the selection. On the contrary with the Random Forest, for each nodes of a decision tree an interaction is modelized. For example if gene A > x & gene B > y & Gene C < z, ...   
 
 The edges of the decision trees models the interaction between the expression of several genes.
 
 
 To evaluate the quality of the prediction with the selected features, the single cell transcriptomics data from Liu et al, 2021, Cell.
 
-Since we already used the Tabula Sapiens data more than once to select the features and compute the variable importances, this dataset has been chosen, as it contains a lot of cells: 8439 after filtration: Only the cells belonging to healthy patients are kept. We want to compare the predictive value of our set of gene with the state of the art reference matrix LM22, used by default by Cibersort*, a software that predicts cell proportion in RNAseq data based on the expression values. This way, only the celltype present in the data and our genesets and LM22 are kept : 
+Since we already used the Tabula Sapiens data more than once to select the features and compute the variable importance, this dataset has been chosen, as it contains a lot of cells: 86 439 after filtration: Only the cells belonging to healthy patients are kept. We want to compare the predictive value of our set of gene with the state of the art reference matrix LM22, used by default by Cibersort*, a software that predicts cell proportion in RNAseq data based on the expression values. This way, only the celltype present in the data and our genesets and LM22 are kept : 
 - T CD4 +
 - T CD8 +
 - Memory B cell
