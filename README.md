@@ -2,7 +2,10 @@
 
 # Work in progress
 
-**Be Carefull, the current signature matrix is built on 16487 cells, not 50115 as it should be, results will differ**
+Some files may be missing or not up to date : 
+- Performance confusion heatmap for the classification
+- one or two scripts
+- results folder
 
 **Contact:**
 Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
