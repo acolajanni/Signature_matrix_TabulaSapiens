@@ -8,7 +8,6 @@ Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
 # Work in progress
 
 Some files may be missing or not up to date : 
-- Performance confusion heatmap for the classification
 - one or two scripts
 - results folder
 
@@ -35,7 +34,12 @@ This page describes the composition and the method of the reference matrix built
 <p align="center">
 <img align="center" src="/doc/Tabula_sapiens_reference_heatmap.png" > 
 
+## Performance of the selected features for the common celltypes
 
+<p align="center">
+<img align="center" src="/performance/Performance_Liu2021_multiclass.png" > 
+<p align="center">
+<img align="center" src="/performance/Performance_TabulaSapiens_multiclass.png" > 
 
 ## Data
 THE TABULA SAPIENS CONSORTIUM. 2022. « The Tabula Sapiens: A multiple-organ, single-cell transcriptomic atlas of humans ». Science 376 (6594): eabl4896. https://doi.org/10.1126/science.abl4896.
