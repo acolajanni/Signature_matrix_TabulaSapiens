@@ -498,6 +498,7 @@ build_confusion_heatmap = function(conf_mat,cell_order,
   scale_fill_viridis(option = "rocket", direction = direction_color_palette)
   
   return(list("plot"=plot, "conf_mat"=conf_mat)) } 
+
 get_confusion = function(directory,pattern2,pattern1="confusion_heatmap_", 
                          cells ){
   # Import files
@@ -661,7 +662,6 @@ ggplot( label_count, aes(x = reorder(cellTypes,Freq), y = Freq, fill=Freq ) )  +
 
 ```
 
-
 ```{r celltypes_Liu2, fig.width=15, fig.height=10,warning=FALSE , message=FALSE, include=FALSE}
 data_dir_tmp = "/run/user/1001/gvfs/sftp:host=core.cluster.france-bioinformatique.fr,user=acolajanni/shared/projects/microbiome_translocation/data/scRNAseq/Liu_2021_cell/"
 
@@ -694,7 +694,6 @@ ggplot( label_count, aes(x = reorder(cells,Freq), y = Freq, fill=Freq ) )  +
 
 ```
 
-
 # Filtering genes - Cell vs Cell {.tabset}
 
 ```{r LFC, fig.width=8, fig.height=6,warning=FALSE , message=FALSE}
@@ -710,10 +709,6 @@ groupwise_prop_full$genes = gene_label
 row.names(groupwise_mean) = gene_label
 row.names(groupwise_prop_full) = gene_label
 
-#groupwise_mean$genes = row.names(groupwise_mean)
-#test = groupwise_mean[groupwise_mean$genes != groupwise_mean$genes_2,c("genes","genes_2")]
-
-
 # Compute median expr over all datatable
 col = colnames(groupwise_mean)[!str_detect(colnames(groupwise_mean), "vs|genes" )]
 expr_median = compute_median_expr(groupwise_mean,col )
@@ -727,6 +722,121 @@ groupwise_mean = merge(groupwise_mean, groupwise_prop_full, by='genes')
 groupwise_mean$genes_prop_expr = NULL
 
 ```
+
+
+
+
+```{r ROC_curve, fig.width=12,fig.height=8}
+perf_dir_Liu = file.path(path, "results/Liu2021/Signature_matrix_v2/") 
+files = list.files(path = perf_dir_Liu, pattern = "ROC_values",  recursive = TRUE)
+files = files[!str_detect(files, "/LR")]
+
+
+ROC = lapply(files, function(f) {
+  table = read.csv2(file.path(perf_dir_Liu,f), header = TRUE, sep = ",", row.names = 1) } )
+
+names(ROC) = files
+
+signature = unname(sapply(files, function(x) str_split(x, "/")[[1]][1]))
+cell = unname(sapply(files, function(x) str_split(x, "/")[[1]][2]))
+
+
+for (index in seq(1:length(ROC))){
+  df = ROC[[index]]
+  df = cbind(df, cell[index])
+  df = cbind(df, signature[index])
+  colnames(df)[(length(colnames(df))-1) : length(colnames(df))  ] = c("cell","signature")
+  ROC[[index]] = df
+}
+
+
+ROC_df = ldply(ROC)
+ROC_df$clf = NULL
+ROC_df$.id = NULL
+
+ROC_df$auc_label = paste0(ROC_df$signature," - AUC = ",as.character(round(as.numeric(ROC_df$auc),4) ))
+
+
+
+annotation_df = ROC_df
+annotation_df$fpr = NULL
+annotation_df$tpr = NULL
+annotation_df = unique(annotation_df)
+
+annotation_df$y = ifelse(annotation_df$signature == "LM22", 0.3, 0.05 )
+annotation_df$y = ifelse(annotation_df$signature == "Tabula_Sapiens_50k", 0.175, annotation_df$y )
+
+
+ggplot(ROC_df, aes(x=as.numeric(fpr),y=as.numeric(tpr),color=signature) ) + 
+  geom_line(alpha=1) +
+  geom_abline(linetype = 2, size = 0.25) + 
+  theme_linedraw() + 
+  labs(color = " ") +
+  geom_label(data=annotation_df, aes(x=1,y=y,label=auc_label,color=signature), size = 3, hjust = 1) + 
+  facet_wrap(. ~ cell, ncol=3) +
+  theme(strip.text = element_text(size=14,face="bold"),
+        panel.background  = element_rect(fill = "white"),
+        panel.grid.major  = element_line(color = "white"),
+        panel.border = element_rect(color = "black",fill=NA))
+
+```
+
+
+```{r ROC_curve, fig.width=12,fig.height=8}
+perf_dir_Liu = file.path(path, "results/Tabula_sapiens/Signature_matrix_v2/") 
+files = list.files(path = perf_dir_Liu, pattern = "ROC_values",  recursive = TRUE)
+files = files[!str_detect(files, "/LR")]
+
+
+ROC = lapply(files, function(f) {
+  table = read.csv2(file.path(perf_dir_Liu,f), header = TRUE, sep = ",", row.names = 1) } )
+
+names(ROC) = files
+
+signature = unname(sapply(files, function(x) str_split(x, "/")[[1]][1]))
+cell = unname(sapply(files, function(x) str_split(x, "/")[[1]][2]))
+
+
+for (index in seq(1:length(ROC))){
+  df = ROC[[index]]
+  df = cbind(df, cell[index])
+  df = cbind(df, signature[index])
+  colnames(df)[(length(colnames(df))-1) : length(colnames(df))  ] = c("cell","signature")
+  ROC[[index]] = df
+}
+
+
+ROC_df = ldply(ROC)
+ROC_df$clf = NULL
+ROC_df$.id = NULL
+
+ROC_df$auc_label = paste0(ROC_df$signature," - AUC = ",as.character(round(as.numeric(ROC_df$auc),4) ))
+
+
+
+annotation_df = ROC_df
+annotation_df$fpr = NULL
+annotation_df$tpr = NULL
+annotation_df = unique(annotation_df)
+
+annotation_df$y = ifelse(annotation_df$signature == "LM22", 0.3, 0.05 )
+annotation_df$y = ifelse(annotation_df$signature == "Tabula_Sapiens_50k", 0.175, annotation_df$y )
+
+
+ggplot(ROC_df, aes(x=as.numeric(fpr),y=as.numeric(tpr),color=signature) ) + 
+  geom_line(alpha=1) +
+  geom_abline(linetype = 2, size = 0.25) + 
+  theme_linedraw() + 
+  labs(color = " ") +
+  geom_label(data=annotation_df, aes(x=1,y=y,label=auc_label,color=signature), size = 3, hjust = 1) + 
+  facet_wrap(. ~ cell, ncol=4) +
+  theme(strip.text = element_text(size=14,face="bold"),
+        panel.background  = element_rect(fill = "white"),
+        panel.grid.major  = element_line(color = "white"),
+        panel.border = element_rect(color = "black",fill=NA))
+
+```
+
 
 ## CD4 vs CD8
 
@@ -899,7 +1009,6 @@ writeLines(top79_nkcd8_genes, file.path(git_geneset,'NKvsCD8_79.txt') )
 
 ```
 
-
 ## Naive vs Memory Bcells
 
 **42 Features selected**
@@ -1035,8 +1144,6 @@ writeLines(top178_nk, file.path(git_geneset,'NK_178.txt') )
 
 ```
 
-
-
 ### Performances
 
 ```{r heatmap_nk, fig.width=14,fig.height=11,message=FALSE}
@@ -1136,8 +1243,6 @@ writeLines(top79_cd8, file.path(data_dir,'CD8_79.txt') )
 writeLines(top79_cd8, file.path(git_geneset,'CD8_79.txt') )
 
 ```
-
-
 
 ### Performances
 
@@ -1260,8 +1365,6 @@ writeLines(CD4_top114, file.path(git_geneset,'CD4_114.txt') )
 
 ```
 
-
-
 ### Performances
 
 ```{r heatmap_cd4, fig.width=14,fig.height=11,message=FALSE}
@@ -1362,7 +1465,6 @@ writeLines(naiveB_top29, file.path(git_geneset,'naiveB_29.txt') )
 
 ```
 
-
 ### Performances
 
 ```{r heatmap_naive, fig.width=14,fig.height=11,message=FALSE}
@@ -1434,9 +1536,6 @@ writeLines(memB_genes, file.path(data_dir,'memoryB_7208.txt') )
 writeLines(memB_genes, file.path(git_geneset,'memoryB_7208.txt') )
 
 ```
-
-
-
 
 ### 7208 features
 
@@ -1513,7 +1612,6 @@ comp$plot + theme_dark() +
   ggtitle("Signature matrix prediction performance with Random Forest - memory B cell Classification") 
 ```
 
-
 ## Neutrophils vs other
 
 **84 Features selected**
@@ -1569,7 +1667,6 @@ writeLines(neutro_top84, file.path(data_dir,'Neutro_84.txt') )
 writeLines(neutro_top84, file.path(git_geneset,'Neutro_84.txt') )
 
 ```
-
 
 ### Performances - No neutrophils in Liu2021 data
 
@@ -1698,7 +1795,6 @@ comp$plot + theme_dark() +
   ggtitle("Signature matrix prediction performance with Random Forest - Plasmocytes Classification") 
 ```
 
-
 ## Monocyte vs other
 
 **174 Features selected**
@@ -1756,7 +1852,6 @@ writeLines(mono_top1870, file.path(data_dir,'Monocyte_1870.txt') )
 
 ```
 
-
 ### 1870 features
 
 ```{r mono_barplot1870, fig.width=12, fig.height=14,warning=FALSE , message=FALSE}
@@ -1779,7 +1874,6 @@ writeLines(mono_top369, file.path(data_dir,'Monocyte_369.txt') )
 
 ```
 
-
 ### 369 features
 
 ```{r mono_barplot369, fig.width=12, fig.height=14,warning=FALSE , message=FALSE}
@@ -1800,7 +1894,6 @@ writeLines(mono_top174, file.path(git_geneset,'Monocyte_174.txt') )
 writeLines(mono_top174, file.path(data_dir,'Monocyte_174.txt') )
 
 ```
-
 
 ### Performances
 
@@ -1875,8 +1968,6 @@ writeLines(macro_new, file.path(git_geneset,'Macrophage_369.txt') )
 
 ```
 
-
-
 ### 369 features
 
 ```{r macro_barplot, fig.width=12, fig.height=14,warning=FALSE , message=FALSE}
@@ -1902,7 +1993,6 @@ writeLines(macro_top68, file.path(data_dir,'Macrophage_68.txt') )
 writeLines(macro_top68, file.path(git_geneset,'Macrophage_68.txt') )
 
 ```
-
 
 ### Performances - No Macrophages in Liu2021 data
 
@@ -1934,8 +2024,6 @@ comp$plot + theme_dark() +
         
   ggtitle("Signature matrix prediction performance with Random Forest - Macrophage Classification") 
 ```
-
-
 
 ## Platelet vs other
 
@@ -2139,8 +2227,6 @@ comp$plot + theme_dark() +
   ggtitle("Signature matrix prediction performance with Random Forest - Multiclass Classification") 
 ```
 
-
-
 ```{r heatmap_tbs, fig.width=18,fig.height=8,message=FALSE}
 cells = c("CD4","CD8","Erythrocyte","Macrophage",
           "Monocyte","NK_cell","Neutrophil", 
@@ -2284,8 +2370,6 @@ grid.text("Genes", y=-0.02, gp=gpar(fontsize=16))
 # grid.text("Genes", y=-0.02, gp=gpar(fontsize=16))
 ```
 
-
-
 ```{r mean_expr_heat2, fig.width=11, fig.height=15,warning=FALSE , message=FALSE, eval=FALSE, include=FALSE}
 
 setHook("grid.newpage", function() pushViewport(viewport(x=1,y=1,width=1, height=1, name="vp", just=c("right","top"))), action="prepend")
@@ -2301,7 +2385,6 @@ pheatmap(heatmap, scale = "row",
 setHook("grid.newpage", NULL, "replace")
 grid.text("Genes", y=0.35, x=0.9, gp=gpar(fontsize=16))
 ```
-
 
 ```{r save_R, eval=FALSE,include=FALSE}
 rmd2rscript <- function(infile){
@@ -2341,4 +2424,3 @@ rmd2rscript <- function(infile){
 
 rmd2rscript("/home/acolajanni/Documents/work/results/Tabula_sapiens/markdown/Feature_selection_50k.Rmd")
 ```
-
