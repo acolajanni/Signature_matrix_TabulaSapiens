@@ -83,88 +83,35 @@ RF = RandomForestClassifier(n_jobs=-1,
 ################################################################################
 
 
+
+cell_dictionnary = {
+    "Plasmocyte": {"path": path_res_Plasmocyte, "geneset": geneset_plasmocyte},
+    "Monocyte": {"path": path_res_Monocyte, "geneset": geneset_Monocyte}, 
+    "NK": {"path": path_res_NK, "geneset": geneset_NK}, 
+    "CD8": {"path": path_res_CD8, "geneset": geneset_CD8}, 
+    "CD4": {"path": path_res_CD4, "geneset": geneset_CD4},
+    "Neutrophil": {"path": path_res_Neutrophil, "geneset": geneset_neutrophil},
+    "Macrophage": {"path": path_res_macrophage, "geneset": geneset_macrophage},
+    "Platelet": {"path": path_res_platelet, "geneset": geneset_platelet},
+    "naive_Bcell": {"path": path_res_Naivebcell, "geneset": geneset_NaiveBcell},
+    "memory_Bcell": {"path": path_res_Membcell, "geneset": geneset_MemBcell},
+
+    "CD48": {"path": path_res_CD48, "geneset": geneset_CD48},
+    "NKCD8": {"path": path_res_NKCD8, "geneset": geneset_NKCD8},
+    "NaiveMemory": {"path": path_res_NaiveMemory, "geneset": geneset_NaiveMemory}    }
+
+
+
+
 def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, model = RF, save_dir_extension="RF_permutation/", cell_type_path=path_data+"Celltypes_of_interest_50k.txt"):    
     for cell in cell_list:
         y = pd.read_csv(cell_type_path,header=None)[0].to_list()
-         
-        if cell == "naive_Bcell" :
-            X = mat[geneset_NaiveBcell].reset_index(drop=True)
-            geneset = geneset_NaiveBcell
-            result_directory = path_res_Naivebcell
-            y_binary = replace_label(y, ['naive_B_cell'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "memory_Bcell" :
-            X = mat[geneset_MemBcell].reset_index(drop=True)
-            geneset = geneset_MemBcell
-            result_directory = path_res_Membcell
-            y_binary = replace_label(y, ['memory_B_cell'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
+        geneset = cell_dictionnary[cell]['geneset']
+        X = mat[ geneset  ].reset_index(drop=True)
+        result_directory = cell_dictionnary[cell]['path']
+        X.index = y
 
-        elif cell == "NK":
-            X = mat[geneset_NK].reset_index(drop=True)
-            geneset = geneset_NK
-            result_directory = path_res_NK
-            y_binary = replace_label(y, ['NK'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "Neutrophil":
-            X = mat[geneset_neutrophil].reset_index(drop=True)
-            geneset = geneset_neutrophil
-            result_directory = path_res_Neutrophil
-            y_binary = replace_label(y, ['Neutrophil'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "Monocyte":
-            X = mat[geneset_Monocyte].reset_index(drop=True)
-            geneset = geneset_Monocyte
-            result_directory = path_res_Monocyte
-            y_binary = replace_label(y, ['Monocyte'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "Plasmocyte":
-            X = mat[geneset_plasmocyte].reset_index(drop=True)
-            geneset = geneset_plasmocyte
-            result_directory = path_res_Plasmocyte
-            y_binary = replace_label(y, ['Plasmocyte'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-        
-        elif cell == "CD4":
-            X = mat[geneset_CD4].reset_index(drop=True)
-            geneset = geneset_CD4
-            result_directory = path_res_CD4
-            y_binary = replace_label(y, ['CD4'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "CD8":
-            X = mat[geneset_CD8].reset_index(drop=True)
-            geneset = geneset_CD8
-            result_directory = path_res_CD8
-            y_binary = replace_label(y, ['CD8'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-        
-        elif cell == "Macrophage":
-            X = mat[geneset_macrophage].reset_index(drop=True)
-            geneset = geneset_macrophage
-            result_directory = path_res_macrophage
-            y_binary = replace_label(y, ['Macrophage'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "Platelet":
-            X = mat[geneset_platelet].reset_index(drop=True)
-            geneset = geneset_platelet
-            result_directory = path_res_platelet
-            y_binary = replace_label(y, ['Platelet'], [1], 0) 
-            _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "CD48":
-            X = mat[geneset_CD48].reset_index(drop=True)
-            X.index = y 
-
-            geneset = geneset_CD48
-            result_directory = path_res_CD48
-            y_binary = y
-            
+        if cell == "CD48":
             y_binary = [match for match in y if match in ['CD4','CD8']]
             CD8_index = X.index == "CD8"
             CD4_index = X.index == "CD4"
@@ -172,16 +119,9 @@ def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, mo
             X = X[CD48_index]
             y_binary = replace_label(y_binary, ['CD8'], [1], 0) 
             _, le, _ = numeric_encoding(y_binary)
+
             
         elif cell == "NKCD8":
-            X = mat[geneset_NKCD8].reset_index(drop=True)
-            X.index = y 
-
-            #X = X_CD48
-            geneset = geneset_NKCD8
-            result_directory = path_res_NKCD8
-            y_binary = y
-            
             y_binary = [match for match in y if match in ['NK_cell','CD8']]
             CD8_index = X.index == "CD8"
             NK_index = X.index == "NK_cell"
@@ -189,15 +129,8 @@ def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, mo
             X = X[NKCD8_index]
             y_binary = replace_label(y_binary, ['CD8'], [1], 0) 
             _, le, _ = numeric_encoding(y_binary)
-            
-        elif cell == "NaiveMemory":
-            X = mat[geneset_NaiveMemory].reset_index(drop=True)
-            X.index = y 
 
-            geneset = geneset_NaiveMemory
-            result_directory = path_res_NaiveMemory
-            y_binary = y
-            
+        elif cell == "NaiveMemory":
             y_binary = [match for match in y if match in ['memory_B_cell','naive_B_cell']]
             naive_index = X.index == "memory_B_cell"
             memory_index = X.index == "naive_B_cell"
@@ -205,10 +138,11 @@ def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, mo
             X = X[naiveMemory_index]
             y_binary = replace_label(y_binary, ['memory_B_cell'], [1], 0) 
             _, le, _ = numeric_encoding(y_binary)
-            
-        else: 
-            print("Error, cell type not recognized:",cell )
-            return None 
+
+
+        else : 
+            y_binary = replace_label(y, [cell], [1], 0) 
+            _, le, _ = numeric_encoding(y_binary)
         
         condition = f'{cell} vs other'
         le_name_mapping = {"other":0 , cell:1}
@@ -227,7 +161,7 @@ def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, mo
         
         
         print( cell,"- FC Filter - Permutations")
-        save_dir=create_dir(result_directory+save_dir_extension)
+        save_dir=create_dir(result_directory+save_dir_extension)        
         X_train,X_test, y_train,y_test = train_test_split(X,y_binary, test_size=0.3, random_state=1)
 
         model.fit(X_train, y_train)
@@ -280,12 +214,12 @@ def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, mo
                                        n_repeats=save_rate, random_state= n_perm+i , 
                                        n_jobs=-1, scoring="neg_mean_squared_error")
             
-            result = result_from_permutations( 
+            result.append(result_from_permutations( 
                     importance_dict,
                     geneset,
                     sort=False,
                     filename=filename+"_"+condition+"_batch"+str(i+1),
-                    save_dir=save_dir)
+                    save_dir=save_dir))
             
         c=0
         for df in result:
@@ -321,4 +255,4 @@ full_list = [
 
 
 RF_permutation_multiple_cell(full_list, "RF_permutation_First", 50, 5, RF)
-RF_permutation_multiple_cell(["CD4","NKCD8","Monocyte"] , "RF_permutation_second", 50, 5, RF)
+RF_permutation_multiple_cell(["CD4","NKCD8","Monocyte"] , "RF_permutation_Second", 50, 5, RF)

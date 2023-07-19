@@ -149,7 +149,7 @@ for i in range(len(Reference_gs)):
         
     elif dataset == "Tabula_Sapiens" :
         path_res=create_dir("/shared/projects/microbiome_translocation/results/Tabula_sapiens/Signature_matrix_v2/")
-        mat=pd.read_csv(path_data+'50000cell_immune_expressed.csv', sep='\t', index_col=0)
+        mat=pd.read_csv(path_data+'Tabula_Sapiens.csv', sep='\t', index_col=0)
         y = pd.read_csv(path_data+"Celltypes_of_interest_50k.txt",header=None)[0].to_list()
         mat.index = y
         

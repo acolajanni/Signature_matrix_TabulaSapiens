@@ -22,7 +22,7 @@ setwd(path)
 
 ################################################################################
 # I M P O R T
-mat = read.csv(file.path(data_dir,"50000cell_immune_expressed.csv"), header=TRUE,sep='\t')#,nrows = 1000 )
+mat = read.csv(file.path(data_dir,"Tabula_Sapiens.csv"), header=TRUE,sep='\t')#,nrows = 1000 )
 cellTypes = readLines(file.path(data_dir,"50k_cell_labels.txt"))
 mat$cell_id = cellTypes
 mat$X = NULL
@@ -72,7 +72,7 @@ writeLines(reduced_CellTypes,file.path(data_dir,"Celltypes_of_interest_50k.txt")
 
 ################################################################################
 # V A R I A N C E   O N   M E A N   E X P R   G R O U P W I S E
-mat = read.csv(file.path(data_dir,"50000cell_immune_expressed.csv"), header=TRUE,sep='\t')#,nrows = 1000 )
+mat = read.csv(file.path(data_dir,"Tabula_Sapiens.csv"), header=TRUE,sep='\t')#,nrows = 1000 )
 mat$X = NULL
 cellTypes = readLines(file.path(data_dir,"Celltypes_of_interest_50k.txt"))
 mat$cell_id = cellTypes
