@@ -333,17 +333,9 @@ writeLines(top247_nkcd8_genes, file.path(git_geneset,'NKvsCD8_247.txt') )
 #' 	
 	
 	
-Permutation_list$`RF_permutation_First_NK vs CD8`= NULL	
-nkcd8_2 = lapply(Permutation_list, function(x) {return(x[1:5]) } ) 	
-nkcd8_2 = rlist::list.cbind(nkcd8_2)	
-mean_imp = rowMeans(nkcd8_2)	
-nkcd8_2$genes = row.names(nkcd8_2) 	
-row_stdev <- apply(nkcd8_2, 1, sd, na.rm=TRUE)	
-	
-nkcd8_2$mean_importance = mean_imp	
-nkcd8_2$std_importance = row_stdev	
-	
-	
+nkcd8_2 = Permutation_list$`RF_permutation_Second_NK vs CD8`
+nkcd8_2$genes = row.names(nkcd8_2)
+
 nkcd8_computation = importance_barplot(nkcd8_2, 50, 	
                                         filter = "mean", 	
                                         title = "Mean feature importance of 50 permutations with 247 genes selected in NK vs CD8 classification")	
