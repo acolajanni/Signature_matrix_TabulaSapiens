@@ -4,15 +4,6 @@
 Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
 
 
-
-# Work in progress
-
-Some files may be missing or not up to date : 
-- one or two scripts
-- results folder
-
-
-
 # Aim
 
 This page describes the composition and the method of the reference matrix built from Tabula Sapiens single cell dataset. It contains: 
