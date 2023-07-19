@@ -2190,11 +2190,11 @@ heatmap = heatmap[,! str_detect(colnames(heatmap), "other|Erythrocyte|prop_expr"
 
 row.names(heatmap) = heatmap$genes
 heatmap$genes = NULL
-
-write.table(heatmap, file.path(data_dir,"Signature_TabulaSapiens_977.txt"),
-          quote = FALSE, row.names = TRUE, sep='\t')
-write.table(heatmap, file.path(git_dir,"/Signature_matrix/Signature_TabulaSapiens_977_10celltypes.txt"),
-          quote = FALSE, row.names = TRUE, sep='\t')
+# 
+# write.table(heatmap, file.path(data_dir,"Signature_TabulaSapiens_977.txt"),
+#           quote = FALSE, row.names = TRUE, sep='\t')
+# write.table(heatmap, file.path(git_dir,"/Signature_matrix/Signature_TabulaSapiens_977_10celltypes.txt"),
+#           quote = FALSE, row.names = TRUE, sep='\t')
 
 ```
 
@@ -2245,19 +2245,7 @@ pheatmap(t(heatmap), scale = "column",
 setHook("grid.newpage", NULL, "replace")
 grid.text("Genes", y=-0.02, gp=gpar(fontsize=16))
 
-# 
-# setHook("grid.newpage", function() pushViewport(viewport(x=1,y=1,width=1, height=0.95, name="vp", just=c("right","top"))), action="prepend")
-# pheatmap(heatmap, scale = "row", 
-#          cutree_cols = 10,
-#          angle_col = "45", main = "Mean expression heatmap of the 977 features used to predict 10 cell types",
-#          clustering_distance_rows = 'correlation', 
-#          clustering_distance_cols = 'correlation',
-#          clustering_method = "ward.D2",
-#          annotation_row = genes_annotation, annotation_colors = my_colour,
-#          color = colorRampPalette(c("navy", "#DDDDDD", "firebrick"))(25),
-#          show_rownames = FALSE)
-# setHook("grid.newpage", NULL, "replace")
-# grid.text("Genes", y=-0.02, gp=gpar(fontsize=16))
+
 ```
 
 ```{r mean_expr_heat2, fig.width=11, fig.height=15,warning=FALSE , message=FALSE, eval=FALSE, include=FALSE}
@@ -2326,12 +2314,15 @@ ggplot(ROC_df, aes(x=as.numeric(fpr),y=as.numeric(tpr),color=signature) ) +
   geom_abline(linetype = 2, size = 0.25) + 
   theme_linedraw() + 
   labs(color = " ") +
+  ggtitle("Celltypes ROC curves for the Liu et al, 2021, Cell dataset - Signature matrix comparison")+
+  xlab("False Positive Rate") + ylab("True Positive Rate") +
   geom_label(data=annotation_df, aes(x=1,y=y,label=auc_label,color=signature), size = 3, hjust = 1) + 
   facet_wrap(. ~ cell, ncol=3) +
   theme(strip.text = element_text(size=14,face="bold"),
         panel.background  = element_rect(fill = "white"),
         panel.grid.major  = element_line(color = "white"),
-        panel.border = element_rect(color = "black",fill=NA))
+        panel.border = element_rect(color = "black",fill=NA),
+        plot.title = element_text(hjust = 0.5))
 
 ```
 
@@ -2383,13 +2374,16 @@ ggplot(ROC_df_tbs, aes(x=as.numeric(fpr),y=as.numeric(tpr),color=signature) ) +
   geom_abline(linetype = 2, size = 0.25) + 
   theme_linedraw() + 
   labs(color = " ") +
+  xlab("False Positive Rate") + ylab("True Positive Rate") +
   geom_label(data=annotation_df, aes(x=1,y=y,label=auc_label,color=signature), size = 3, hjust = 1) + 
   facet_wrap(. ~ cell, ncol=4) +
+  ggtitle("Celltypes ROC curves for the Tabula Sapiens dataset - Signature matrix comparison")+
   theme(strip.text = element_text(size=14,face="bold"),
         panel.background  = element_rect(fill = "white"),
         panel.grid.major  = element_line(color = "white"),
         panel.border = element_rect(color = "black",fill=NA),
-        legend.position = c(0.75,0.15))
+        legend.position = c(0.75,0.15),
+        plot.title = element_text(hjust = 0.5))
 
 ```
 
