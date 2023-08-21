@@ -1,7 +1,7 @@
 # Signature matrix built from Tabula Sapiens single cell dataset
 
 **Contact:**
-Antonin Colajanni: antonin.colajanni@u-bordeaux.fr
+antonin.colajanni@u-bordeaux.fr
 
 
 # Aim
