@@ -56,14 +56,18 @@ geneset_CD48 = pd.read_csv(path_data+"50k_cells_geneset/CD4vsCD8_3435.txt",heade
 geneset_NKCD8 = pd.read_csv(path_data+"50k_cells_geneset/CD8vsNK_1028.txt",header=None)[0].to_list()
 geneset_NaiveMemory=pd.read_csv(path_data+"50k_cells_geneset/naiveVSmemory_B_3582.txt",header=None)[0].to_list()
 
-geneset_MemBcell = pd.read_csv(path_data+"50k_cells_geneset/memoryB_7208.txt",header=None)[0].to_list()
-geneset_NaiveBcell= pd.read_csv(path_data+"50k_cells_geneset/naiveB_6098.txt",header=None)[0].to_list()
+geneset_MemBcell = pd.read_csv(path_data+"50k_cells_geneset/memoryB_1056.txt",header=None)[0].to_list()
+geneset_NaiveBcell= pd.read_csv(path_data+"50k_cells_geneset/naiveB_1115.txt",header=None)[0].to_list()
 geneset_macrophage = pd.read_csv(path_data+"50k_cells_geneset/Macrophage_369.txt",header=None)[0].to_list()
 geneset_platelet = pd.read_csv(path_data+"50k_cells_geneset/Platelet_510.txt",header=None)[0].to_list()
 
 
 geneset_CD4 = pd.read_csv(path_data+"50k_cells_geneset/CD4_319.txt",header=None)[0].to_list()
 geneset_NKCD8 = pd.read_csv(path_data+"50k_cells_geneset/NKvsCD8_247.txt",header=None)[0].to_list()
+geneset_Monocyte = pd.read_csv(path_data+"50k_cells_geneset/Monocyte_1870.txt",header=None)[0].to_list()
+geneset_Monocyte = pd.read_csv(path_data+"50k_cells_geneset/Monocyte_369.txt",header=None)[0].to_list()
+geneset_MemBcell = pd.read_csv(path_data+"50k_cells_geneset/memoryB_588.txt",header=None)[0].to_list()
+geneset_NaiveBcell= pd.read_csv(path_data+"50k_cells_geneset/naiveB_347.txt",header=None)[0].to_list()
 
 
 # Import
@@ -93,13 +97,12 @@ cell_dictionnary = {
     "Neutrophil": {"path": path_res_Neutrophil, "geneset": geneset_neutrophil},
     "Macrophage": {"path": path_res_macrophage, "geneset": geneset_macrophage},
     "Platelet": {"path": path_res_platelet, "geneset": geneset_platelet},
-    "naive_Bcell": {"path": path_res_Naivebcell, "geneset": geneset_NaiveBcell},
-    "memory_Bcell": {"path": path_res_Membcell, "geneset": geneset_MemBcell},
+    "naive_B_cell": {"path": path_res_Naivebcell, "geneset": geneset_NaiveBcell},
+    "memory_B_cell": {"path": path_res_Membcell, "geneset": geneset_MemBcell},
 
     "CD48": {"path": path_res_CD48, "geneset": geneset_CD48},
     "NKCD8": {"path": path_res_NKCD8, "geneset": geneset_NKCD8},
     "NaiveMemory": {"path": path_res_NaiveMemory, "geneset": geneset_NaiveMemory}    }
-
 
 
 
@@ -235,16 +238,17 @@ def RF_permutation_multiple_cell(cell_list, filename, n_perm=50, save_rate=5, mo
 
 
     return result
+    
 
-
+# full list
 full_list = [
     "NaiveMemory",
     "CD48",
     "NKCD8", 
     "NK", 
     "Neutrophil",
-    "naive_Bcell",
-    "memory_Bcell",
+    "naive_B_cell",
+    "memory_B_cell",
     "Monocyte" 
     "Plasmocyte" ,
     "CD4" , 
@@ -255,4 +259,5 @@ full_list = [
 
 
 RF_permutation_multiple_cell(full_list, "RF_permutation_First", 50, 5, RF)
-RF_permutation_multiple_cell(["CD4","NKCD8","Monocyte"] , "RF_permutation_Second", 50, 5, RF)
+RF_permutation_multiple_cell(["CD4","NKCD8","Monocyte","naive_B_cell","memory_B_cell"] , "RF_permutation_Second", 50, 5, RF)
+RF_permutation_multiple_cell(["Monocyte"] , "RF_permutation_Third", 50, 5, RF)
