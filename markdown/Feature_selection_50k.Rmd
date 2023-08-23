@@ -2245,11 +2245,11 @@ heatmap = heatmap[,! str_detect(colnames(heatmap), "other|Erythrocyte|prop_expr"
 
 row.names(heatmap) = heatmap$genes
 heatmap$genes = NULL
-# 
-# write.table(heatmap, file.path(data_dir,"Signature_TabulaSapiens_977.txt"),
-#           quote = FALSE, row.names = TRUE, sep='\t')
-# write.table(heatmap, file.path(git_dir,"/Signature_matrix/Signature_TabulaSapiens_977_10celltypes.txt"),
-#           quote = FALSE, row.names = TRUE, sep='\t')
+ 
+ write.table(heatmap, file.path(data_dir,"Signature_TabulaSapiens_1039.txt"),
+           quote = FALSE, row.names = TRUE, sep='\t')
+ write.table(heatmap, file.path(git_dir,"/Signature_matrix/Signature_TabulaSapiens_1039_10celltypes.txt"),
+           quote = FALSE, row.names = TRUE, sep='\t')
 
 ```
 
