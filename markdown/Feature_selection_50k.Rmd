@@ -1038,7 +1038,7 @@ cf_Liu2021 = merge_confusion_matrix(
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/NK_cell/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/NK_cell/" ),
   til10_path = file.path(path_heatmap, "TIL10/NK_cell/" ),
   lm22_path = file.path(path_heatmap, "LM22/NK_cell/" ),
   pattern2= "/confusion_heatmap_",
@@ -1129,7 +1129,7 @@ writeLines(top79_cd8, file.path(git_geneset,'CD8_79.txt') )
 path_heatmap = file.path(path,"results/Liu2021/Signature_matrix_v2/")
 
 cf_Liu2021 = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/CD8/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/CD8/" ),
   til10_path = file.path(path_heatmap, "TIL10/CD8/RF/" ),
   lm22_path = file.path(path_heatmap, "LM22/CD8/RF/" ),
   pattern2= "/confusion_heatmap_",
@@ -1138,7 +1138,7 @@ cf_Liu2021 = merge_confusion_matrix(
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/CD8/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/CD8/" ),
   til10_path = file.path(path_heatmap, "TIL10/CD8/" ),
   lm22_path = file.path(path_heatmap, "LM22/CD8/" ),
   pattern2= "/confusion_heatmap_",
@@ -1250,7 +1250,7 @@ writeLines(CD4_top114, file.path(git_geneset,'CD4_114.txt') )
 path_heatmap = file.path(path,"results/Liu2021/Signature_matrix_v2/")
 
 cf_Liu2021 = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/CD4/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/CD4/" ),
   til10_path = file.path(path_heatmap, "TIL10/CD4/RF/" ),
   lm22_path = file.path(path_heatmap, "LM22/CD4/RF/" ),
   pattern2= "/confusion_heatmap_",
@@ -1259,7 +1259,7 @@ cf_Liu2021 = merge_confusion_matrix(
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/CD4/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/CD4/" ),
   til10_path = file.path(path_heatmap, "TIL10/CD4/" ),
   lm22_path = file.path(path_heatmap, "LM22/CD4/" ),
   pattern2= "/confusion_heatmap_",
@@ -1298,7 +1298,7 @@ FC_df_naiveB = Get_value_RA(FC_df_naiveB, expr_median)
 FC_df_naiveB = FC_prop_expr(FC_df_naiveB)
 
 
-elbow=kneedle_threshold(FC_df_naiveB, FC_df_naiveB$naive_B_cell, min = 1) 
+elbow=kneedle_threshold(FC_df_naiveB, FC_df_naiveB$FC_naive_B_cell, min = 1) 
 
 elbow$plot
 
@@ -1313,36 +1313,70 @@ naiveB$plot
 
 naiveB_genes = row.names(naiveB$df[naiveB$df$selection != "Not selected",])
 
-writeLines(naiveB_genes, file.path(data_dir,'naiveB_6098.txt') )
-writeLines(naiveB_genes, file.path(git_geneset,'naiveB_6098.txt') )
+writeLines(naiveB_genes, file.path(data_dir,'naiveB_1115.txt') )
+writeLines(naiveB_genes, file.path(git_geneset,'naiveB_1115.txt') )
 
 ```
 
-### 6098 features
+### 1115 features
 
 ```{r naiveB_barplot, fig.width=12, fig.height=8,warning=FALSE , message=FALSE}
 
 Permutation_list = get_permutation_list(
   directory = file.path(result_dir, "Naive_Bcell/" ),
-  pattern2= "/RF_permutation/Permutation_result_")
+  pattern2= "/RF_permutation/Permutation_result_RF_permutation_erratum_")
 
 
-other_naiveB = Permutation_list$`RF_permutation_First_Naive_Bcell vs other`
+other_naiveB = Permutation_list$`naive_B_cell vs other`
 other_naiveB$genes = row.names(other_naiveB)
 
 naiveB_computation = importance_barplot(other_naiveB, 50, 
                                         filter = "mean", 
-                                        title = "Mean feature importance of 50 permutations with 6098 genes selected in Other vs naive Bcell classification",
-                                        conf_interval = FALSE)
+                                        title = "Mean feature importance of 50 permutations with 1115 genes selected in Other vs naive Bcell classification",
+                                        conf_interval = FALSE) 
+  
+                                        
+naiveB_computation$plot + 
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank() )
+
+naiveB_top347 = naiveB_computation$ordered_permutation_dataframe[naiveB_computation$ordered_permutation_dataframe$mean_importance > 0,]$genes
+writeLines(naiveB_top347, file.path(data_dir,'naiveB_347.txt') )
+writeLines(naiveB_top347, file.path(git_geneset,'naiveB_347.txt') )
+
+```
+
+### 347 features
+
+```{r naiveB_barplot2, fig.width=12, fig.height=8,warning=FALSE , message=FALSE}
+
+Permutation_list = get_permutation_list(
+  directory = file.path(result_dir, "Naive_Bcell/" ),
+  pattern2= "/RF_permutation_second/Permutation_result_RF_permutation_erratum_")
+
+
+other_naiveB = Permutation_list$`second_naive_B_cell vs other`
+other_naiveB$genes = row.names(other_naiveB)
+
+naiveB_computation = importance_barplot(other_naiveB, 50, 
+                                        filter = "mean", 
+                                        title = "Mean feature importance of 50 permutations with 347 genes selected in Other vs naive Bcell classification",
+                                        conf_interval = FALSE) 
+  
                                         
 naiveB_computation$plot + 
   theme(axis.text.y = element_text(size=10))
 
-naiveB_top29 = naiveB_computation$ordered_permutation_dataframe[naiveB_computation$ordered_permutation_dataframe$mean_importance > 0,]$genes
-writeLines(naiveB_top29, file.path(data_dir,'naiveB_29.txt') )
-writeLines(naiveB_top29, file.path(git_geneset,'naiveB_29.txt') )
+
+naiveB_top17 = naiveB_computation$ordered_permutation_dataframe[naiveB_computation$ordered_permutation_dataframe$mean_importance > 0,]$genes
+writeLines(naiveB_top17, file.path(data_dir,'naiveB_17.txt') )
+writeLines(naiveB_top17, file.path(git_geneset,'naiveB_17.txt') )
+
+# naiveB_29 = readLines("/home/acolajanni/Documents/work/GITHUB/save_erratum_22-08/naiveB_29.txt")
+# upset(fromList(list("29" = naiveB_29, "17" = naiveB_top17)))
 
 ```
+
 
 ### Performances
 
@@ -1350,7 +1384,7 @@ writeLines(naiveB_top29, file.path(git_geneset,'naiveB_29.txt') )
 path_heatmap = file.path(path,"results/Liu2021/Signature_matrix_v2/")
 
 cf_Liu2021 = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/naive_B_cell/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/naive_B_cell/" ),
   til10_path = file.path(path_heatmap, "TIL10/naive_B_cell/RF/" ),
   lm22_path = file.path(path_heatmap, "LM22/naive_B_cell/RF/" ),
   pattern2= "/confusion_heatmap_",
@@ -1359,7 +1393,7 @@ cf_Liu2021 = merge_confusion_matrix(
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/naive_B_cell/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/naive_B_cell/" ),
   til10_path = file.path(path_heatmap, "TIL10/naive_B_cell/" ),
   lm22_path = file.path(path_heatmap, "LM22/naive_B_cell/" ),
   pattern2= "/confusion_heatmap_",
@@ -1398,7 +1432,7 @@ FC_df_memB = Get_value_RA(FC_df_memB, expr_median)
 FC_df_memB = FC_prop_expr(FC_df_memB)
 
 
-elbow=kneedle_threshold(FC_df_memB, FC_df_memB$memory_B_cell,min = 1) 
+elbow=kneedle_threshold(FC_df_memB, FC_df_memB$FC_memory_B_cell,min = 1) 
 elbow$plot
 memB = Rprop_plot(FC_df_memB,FC_x = "FC_memory_B_cell", y="memory_B_cell_prop_expr", 
                 title = "Log Fold Change of Memory B cell vs other depending on the proportion of CD8 cells expressing the genes",
@@ -1411,18 +1445,18 @@ memB$plot
 
 memB_genes = row.names(memB$df[memB$df$selection != "Not selected",])
 
-writeLines(memB_genes, file.path(data_dir,'memoryB_7208.txt') )
-writeLines(memB_genes, file.path(git_geneset,'memoryB_7208.txt') )
+writeLines(memB_genes, file.path(data_dir,'memoryB_1056.txt') )
+writeLines(memB_genes, file.path(git_geneset,'memoryB_1056.txt') )
 
 ```
 
-### 7208 features
+### 1056 features
 
 ```{r memB_barplot, fig.width=12, fig.height=10,warning=FALSE , message=FALSE}
 
 Permutation_list = get_permutation_list(
   directory = file.path(result_dir, "Memory_Bcell/" ),
-  pattern2= "/RF_permutation/Permutation_result_")
+  pattern2= "/RF_permutation/Permutation_result_RF_permutation_erratum_")
 
 # other_memB = lapply(Permutation_list, function(x) {return(x[,1:(ncol(x)-2)]) } ) 
 # other_memB = rlist::list.cbind(other_memB)
@@ -1432,20 +1466,51 @@ Permutation_list = get_permutation_list(
 # 
 # other_memB$mean_importance = mean_imp
 # other_memB$std_importance = row_stdev
-other_memB = Permutation_list$`RF_permutation_First_Memory_Bcell vs other`
+
+other_memB = Permutation_list$`memory_B_cell vs other`
 other_memB$Genes = row.names(other_memB) 
   
 memB_computation = importance_barplot(other_memB, 50, 
                                         filter = "mean", 
-                                        title = "Mean feature importance of 50 permutations with 7208 genes selected in Other vs nnaive Bcell classification")
+                                        title = "Mean feature importance of 50 permutations with 1056 genes selected in Other vs nnaive Bcell classification")
                                         
 memB_computation$plot + 
-  theme(axis.text.y = element_text(size=9))
+  theme(axis.text.y=element_blank(),
+        axis.ticks.y=element_blank() )
 
-top53_memB = memB_computation$ordered_permutation_dataframe[memB_computation$ordered_permutation_dataframe$mean_importance > 0 ,]$genes
+top588_memB = memB_computation$ordered_permutation_dataframe[memB_computation$ordered_permutation_dataframe$mean_importance > 0 ,]$genes
 
-writeLines(top53_memB, file.path(data_dir,'memoryB_53.txt') )
-writeLines(top53_memB, file.path(git_geneset,'memoryB_53.txt') )
+writeLines(top588_memB, file.path(data_dir,'memoryB_588.txt') )
+writeLines(top588_memB, file.path(git_geneset,'memoryB_588.txt') )
+
+```
+
+### 588 features
+
+```{r memB_barplot2, fig.width=12, fig.height=8,warning=FALSE , message=FALSE}
+
+Permutation_list = get_permutation_list(
+  directory = file.path(result_dir, "Memory_Bcell/" ),
+  pattern2= "/RF_permutation_second/Permutation_result_RF_permutation_erratum_")
+
+
+other_memB = Permutation_list$`second_memory_B_cell vs other`
+other_memB$genes = row.names(other_memB)
+
+memB_computation = importance_barplot(other_memB, 50, 
+                                        filter = "mean", 
+                                        title = "Mean feature importance of 50 permutations with 588 genes selected in Other vs memory Bcell classification",
+                                        conf_interval = FALSE) 
+  
+                                        
+memB_computation$plot + 
+  theme(axis.text.y = element_text(size=5))
+
+
+top147_memB = memB_computation$ordered_permutation_dataframe[memB_computation$ordered_permutation_dataframe$mean_importance > 0 ,]$genes
+
+writeLines(top147_memB, file.path(data_dir,'memoryB_147.txt') )
+writeLines(top147_memB, file.path(git_geneset,'memoryB_147.txt') )
 
 ```
 
@@ -1455,7 +1520,7 @@ writeLines(top53_memB, file.path(git_geneset,'memoryB_53.txt') )
 path_heatmap = file.path(path,"results/Liu2021/Signature_matrix_v2/")
 
 cf_Liu2021 = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/memory_B_cell/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/memory_B_cell/" ),
   til10_path = file.path(path_heatmap, "TIL10/memory_B_cell/RF/" ),
   lm22_path = file.path(path_heatmap, "LM22/memory_B_cell/RF/" ),
   pattern2= "/confusion_heatmap_",
@@ -1464,7 +1529,7 @@ cf_Liu2021 = merge_confusion_matrix(
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/memory_B_cell/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/memory_B_cell/" ),
   til10_path = file.path(path_heatmap, "TIL10/memory_B_cell/" ),
   lm22_path = file.path(path_heatmap, "LM22/memory_B_cell/" ),
   pattern2= "/confusion_heatmap_",
@@ -1555,7 +1620,7 @@ writeLines(neutro_top84, file.path(git_geneset,'Neutro_84.txt') )
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/Neutrophil/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Neutrophil/" ),
   til10_path = file.path(path_heatmap, "TIL10/Neutrophil/" ),
   lm22_path = file.path(path_heatmap, "LM22/Neutrophil/" ),
   pattern2= "/confusion_heatmap_",
@@ -1643,7 +1708,7 @@ writeLines(plasmo_top19, file.path(git_geneset,'Plasmocyte_19.txt') )
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf1 = confusion_matrix_setup(
-    directory = file.path(path_heatmap, "Tabula_Sapiens_50k/Plasmocyte/" ),
+    directory = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Plasmocyte/" ),
     pattern2= "/confusion_heatmap_",
     cells = c("Other_cells","Plasmocyte"),
     signature_matrix = "Tabula Sapiens")
@@ -1780,7 +1845,7 @@ writeLines(mono_top174, file.path(data_dir,'Monocyte_174.txt') )
 path_heatmap = file.path(path,"results/Liu2021/Signature_matrix_v2/")
 
 cf_Liu2021 = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/Monocyte/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Monocyte/" ),
   til10_path = file.path(path_heatmap, "TIL10/Monocyte/RF/" ),
   lm22_path = file.path(path_heatmap, "LM22/Monocyte/RF/" ),
   pattern2= "/confusion_heatmap_",
@@ -1789,7 +1854,7 @@ cf_Liu2021 = merge_confusion_matrix(
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/Monocyte/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Monocyte/" ),
   til10_path = file.path(path_heatmap, "TIL10/Monocyte/" ),
   lm22_path = file.path(path_heatmap, "LM22/Monocyte/" ),
   pattern2= "/confusion_heatmap_",
@@ -1879,7 +1944,7 @@ writeLines(macro_top68, file.path(git_geneset,'Macrophage_68.txt') )
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/Macrophage/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Macrophage/" ),
   til10_path = file.path(path_heatmap, "TIL10/Macrophage/" ),
   lm22_path = file.path(path_heatmap, "LM22/Macrophage/" ),
   pattern2= "/confusion_heatmap_",
@@ -1980,7 +2045,7 @@ writeLines(plat_top40, file.path(data_dir,'Platelet_40.txt') )
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = confusion_matrix_setup(
-    directory = file.path(path_heatmap, "Tabula_Sapiens_50k-10celltypes/Platelet/" ),
+    directory = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Platelet/" ),
     pattern2= "/confusion_heatmap_",
     cells = c("Other_cells","Platelet"),
     signature_matrix = "Tabula Sapiens")
@@ -2033,11 +2098,11 @@ TabulaSapiens_geneset = list(
   
   "Macrophage"= macro_top68,
   "Platelet"  = plat_top40,
-  "memory_B_cell"   = unique(c(top42_naive_mem, top53_memB)), 
-  "naive_B_cell"    = unique(c(naiveB_top29,top42_naive_mem))
+  "memory_B_cell"   = unique(c(top42_naive_mem, top147_memB)), 
+  "naive_B_cell"    = unique(c(naiveB_top17,top42_naive_mem))
   )
 
-#save(TabulaSapiens_geneset, file = file.path(git_geneset,"TabulaSapiens_geneset_final.Rdata"))
+save(TabulaSapiens_geneset, file = file.path(git_geneset,"TabulaSapiens_geneset_final_erratum.Rdata"))
   
 geneset_flat = unique(unlist(TabulaSapiens_geneset))
 
@@ -2078,7 +2143,7 @@ plot_list
 cells = c("CD4","CD8","Monocyte","NK_cell","memory_B_cell","naive_B_cell")
 
 cf_Liu2021 = merge_confusion_matrix( 
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/Multiclass/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Multiclass/" ),
   til10_path = file.path(path_heatmap, "TIL10/Multiclass/RF/" ),
   lm22_path = file.path(path_heatmap, "LM22/Multiclass/RF/" ),
   pattern2= "/confusion_heatmap_",
@@ -2113,7 +2178,7 @@ cells = c("CD4","CD8","Erythrocyte","Macrophage",
 path_heatmap = file.path(path,"results/Tabula_sapiens/Signature_matrix_v2/")
 
 cf_tbs = merge_confusion_matrix(
-  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k/Multiclass/" ),
+  tbs_path = file.path(path_heatmap, "Tabula_Sapiens_50k_erratum/Multiclass/" ),
   til10_path = file.path(path_heatmap, "TIL10/Multiclass/" ),
   lm22_path = file.path(path_heatmap, "LM22/Multiclass/" ),
   pattern2= "/confusion_heatmap_",
@@ -2162,11 +2227,10 @@ comp$plot + theme_dark() +
 TabulaSapiens_binary = geneset_to_binary_df(TabulaSapiens_geneset)
 print(table(rowSums(TabulaSapiens_binary)))
 
-writeLines(geneset_flat, file.path(path,"/results/Tabula_sapiens/LM22/signature_genes_TabulaSapiens_50k.txt"))
+writeLines(geneset_flat, file.path(path,"/results/Tabula_sapiens/LM22/signature_genes_TabulaSapiens_50k_erratum.txt"))
 
-write.table(TabulaSapiens_binary, file.path(path,"/results/Tabula_sapiens/LM22/TabulaSapiens_binary.txt"),
+write.table(TabulaSapiens_binary, file.path(path,"/results/Tabula_sapiens/LM22/TabulaSapiens_binary_erratum.txt"),
              quote = FALSE, row.names = TRUE, sep='\t')
-            
             
 
 ```
@@ -2226,7 +2290,7 @@ my_colour = list(
 setHook("grid.newpage", function() pushViewport(viewport(x=1,y=1,width=1, height=0.95, name="vp", just=c("right","top"))), action="prepend")
 pheatmap(t(heatmap), scale = "column", 
          cutree_cols = 10,
-         angle_col = "45", main = "Mean expression heatmap of the 977 features used to predict 10 cell types",
+         angle_col = "45", main = "Mean expression heatmap of the 1039 features used to predict 10 cell types",
          clustering_distance_rows = 'correlation', 
          clustering_distance_cols = 'correlation',
          clustering_method = "ward.D2",
@@ -2244,7 +2308,7 @@ grid.text("Genes", y=-0.02, gp=gpar(fontsize=16))
 setHook("grid.newpage", function() pushViewport(viewport(x=1,y=1,width=1, height=1, name="vp", just=c("right","top"))), action="prepend")
 pheatmap(heatmap, scale = "row", 
          cutree_rows = 10,
-         angle_col = "45", main = "Mean expression heatmap of the 977 features used to predict 10 cell types",
+         angle_col = "45", main = "Mean expression heatmap of the 1039 features used to predict 10 cell types",
          clustering_distance_rows = 'correlation', 
          clustering_distance_cols = 'correlation',
          clustering_method = "ward.D2",
@@ -2286,6 +2350,10 @@ for (index in seq(1:length(ROC))){
 ROC_df = ldply(ROC)
 ROC_df$clf = NULL
 ROC_df$.id = NULL
+
+ROC_df = ROC_df[ROC_df$signature != "Tabula_Sapiens_50k" , ]
+ROC_df$signature = ifelse(ROC_df$signature == "Tabula_Sapiens_50k_erratum", 
+                          yes = "Tabula_Sapiens_50k", no = ROC_df$signature )
 
 ROC_df$auc_label = paste0(ROC_df$signature," - AUC = ",as.character(round(as.numeric(ROC_df$auc),4) ))
 
@@ -2350,6 +2418,10 @@ ROC_df_tbs$auc_label = paste0(ROC_df_tbs$signature," - AUC = ",as.character(roun
 
 ROC_df_tbs = ROC_df_tbs[ROC_df_tbs$signature != "Tabula_Sapiens_50k-10celltypes",]
 
+ROC_df_tbs = ROC_df_tbs[ROC_df_tbs$signature != "Tabula_Sapiens_50k" , ]
+ROC_df_tbs$signature = ifelse(ROC_df_tbs$signature == "Tabula_Sapiens_50k_erratum", 
+                          yes = "Tabula_Sapiens_50k", no = ROC_df_tbs$signature )
+
 annotation_df = ROC_df_tbs
 annotation_df$fpr = NULL
 annotation_df$tpr = NULL
@@ -2377,14 +2449,6 @@ ggplot(ROC_df_tbs, aes(x=as.numeric(fpr),y=as.numeric(tpr),color=signature) ) +
         plot.title = element_text(hjust = 0.5))
 
 ```
-
-
-
-
-
-
-
-
 
 
 
