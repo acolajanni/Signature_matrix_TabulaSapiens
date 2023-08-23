@@ -63,7 +63,7 @@ At last, the evaluated classification performance are contained in the folder [p
 ## Method description 
 
 <p align="center">
-<img src="/doc/Diapo_pathseq-TabulaSapiens.drawio.png" height="500">
+<img src="/doc/Diapo_pathseq-TabulaSapiens_correction.drawio.png" height="500">
 
 
 After obtaining the normalised count table, a first step of feature engineering is done. First, for each celltype the mean expression of it and without the said celltype is computed. This way, a fold change between the background and the given cell can be calculated.
