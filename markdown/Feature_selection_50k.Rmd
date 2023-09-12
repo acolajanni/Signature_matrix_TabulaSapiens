@@ -2271,6 +2271,8 @@ X$other = NULL
 
 write.table(X, file.path(data_dir,"Signature_TabulaSapiens_1039_raw.txt"),
            quote = FALSE, row.names = TRUE, sep='\t')
+write.table(X, file.path(git_dir,"/Signature_matrix/Signature_TabulaSapiens_1039_raw.txt"),
+           quote = FALSE, row.names = TRUE, sep='\t')
 #####
 
 
