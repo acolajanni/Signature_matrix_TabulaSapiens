@@ -614,6 +614,9 @@ ggplot( label_count, aes(x = reorder(label_count,Freq), y = Freq, fill=Freq ) ) 
 cellTypes = read.table(file.path(data_dir,"Celltypes_of_interest_50k.txt"), header=FALSE, sep='\t')
 label_count = cellTypes$V1
 label_count = as.data.frame(table(label_count) )
+label_count$label_count = ifelse(label_count$label_count == "Plasmocyte",
+                                 "Plasma_cell", as.vector(label_count$label_count ) )
+
 
 ggplot( label_count, aes(x = reorder(label_count,Freq), y = Freq, fill=Freq ) )  +
   geom_col(position = position_dodge(0), width = 0.75) +
@@ -2245,8 +2248,33 @@ heatmap = heatmap[,! str_detect(colnames(heatmap), "other|Erythrocyte|prop_expr"
 
 row.names(heatmap) = heatmap$genes
 heatmap$genes = NULL
- 
- write.table(heatmap, file.path(data_dir,"Signature_TabulaSapiens_1039.txt"),
+
+
+mat=read.csv(paste0(path,"/data/Tabula_sapiens_immune_all/raw_Tabula_sapiens_1039genes.txt"), 
+             sep='\t',row.names = 1, header = TRUE)
+
+
+#####
+cellTypes = readLines(file.path(data_dir,"Celltypes_of_interest_50k.txt"))
+mat$cell_id = cellTypes
+
+# Aggregate rows by group by using mean function
+groupwise_mean = aggregate(mat[colnames(mat)[colnames(mat) != 'cell_id']], list(mat$cell_id), FUN=mean)
+groupwise_mean = t(groupwise_mean)
+colnames(groupwise_mean) = groupwise_mean[1,]
+groupwise_mean = groupwise_mean[-1,]
+summary(groupwise_mean)
+
+X <- as.data.frame(apply(groupwise_mean, 2, as.numeric))
+row.names(X) = row.names(groupwise_mean)
+X$other = NULL
+
+write.table(X, file.path(data_dir,"Signature_TabulaSapiens_1039_raw.txt"),
+           quote = FALSE, row.names = TRUE, sep='\t')
+#####
+
+
+write.table(heatmap, file.path(data_dir,"Signature_TabulaSapiens_1039.txt"),
            quote = FALSE, row.names = TRUE, sep='\t')
  write.table(heatmap, file.path(git_dir,"/Signature_matrix/Signature_TabulaSapiens_1039_10celltypes.txt"),
            quote = FALSE, row.names = TRUE, sep='\t')
